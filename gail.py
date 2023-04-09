@@ -24,7 +24,7 @@ import tensorflow as tf
 #from tensorflow.contrib import summary as contrib_summary
 #from tensorflow.contrib.eager.python import tfe as contrib_eager_python_tfe
 #from tensorflow.contrib.gan.python.losses.python import losses_impl as contrib_gan_python_losses_python_losses_impl
-
+import tensorflow_gan as tfgan
 
 class Discriminator(tf.keras.Model):
   """Implementation of a discriminator network."""
@@ -127,7 +127,7 @@ class GAIL(object):
       expert_output = self.discriminator(expert_inputs)
 
       with tf.summary.record_if(self.disc_step % 100 == 0):
-        gan_loss = contrib_gan_python_losses_python_losses_impl.modified_discriminator_loss(
+        gan_loss = tfgan.losses.modified_discriminator_loss(
             expert_output,
             output,
             label_smoothing=0.0,
